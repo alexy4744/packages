@@ -30,6 +30,12 @@
             "jestConfig": "packages/nestjs-request-context/jest.config.js",
             "passWithNoTests": true
           }
+        },
+        "version": {
+          "executor": "@jscutlery/semver:version",
+          "options": {
+            "syncVersions": false
+          }
         }
       }
     },
