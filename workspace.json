@@ -1,6 +1,60 @@
 {
   "version": 2,
   "projects": {
+    "nestjs-request-context": {
+      "root": "packages/nestjs-request-context",
+      "sourceRoot": "packages/nestjs-request-context/src",
+      "projectType": "library",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/packages/nestjs-request-context",
+            "tsConfig": "packages/nestjs-request-context/tsconfig.lib.json",
+            "packageJson": "packages/nestjs-request-context/package.json",
+            "main": "packages/nestjs-request-context/src/index.ts",
+            "assets": ["packages/nestjs-request-context/*.md"]
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["packages/nestjs-request-context/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/packages/nestjs-request-context"],
+          "options": {
+            "jestConfig": "packages/nestjs-request-context/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "nestjs-request-context-e2e": {
+      "root": "packages/nestjs-request-context-e2e",
+      "projectType": "application",
+      "sourceRoot": "packages/nestjs-request-context-e2e/src",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/nx-plugin:e2e",
+          "options": {
+            "target": "nestjs-request-context:build",
+            "npmPackageName": "@alexy4744/nestjs-request-context",
+            "pluginOutputPath": "dist/packages/nestjs-request-context",
+            "jestConfig": "packages/nestjs-request-context-e2e/jest.config.js"
+          }
+        },
+        "version": {
+          "executor": "@jscutlery/semver:version",
+          "options": {
+            "syncVersions": false
+          }
+        }
+      }
+    },
     "nx-mikro-orm-cli": {
       "root": "packages/nx-mikro-orm-cli",
       "sourceRoot": "packages/nx-mikro-orm-cli/src",
@@ -9,16 +63,12 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "packages/nx-mikro-orm-cli/**/*.ts"
-            ]
+            "lintFilePatterns": ["packages/nx-mikro-orm-cli/**/*.ts"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/packages/nx-mikro-orm-cli"
-          ],
+          "outputs": ["coverage/packages/nx-mikro-orm-cli"],
           "options": {
             "jestConfig": "packages/nx-mikro-orm-cli/jest.config.js",
             "passWithNoTests": true
@@ -26,9 +76,7 @@
         },
         "build": {
           "executor": "@nrwl/node:package",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/packages/nx-mikro-orm-cli",
             "tsConfig": "packages/nx-mikro-orm-cli/tsconfig.lib.json",

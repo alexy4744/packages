@@ -27,6 +27,13 @@
     ]
   },
   "projects": {
+    "nestjs-request-context": {
+      "tags": []
+    },
+    "nestjs-request-context-e2e": {
+      "tags": [],
+      "implicitDependencies": ["nestjs-request-context"]
+    },
     "nx-mikro-orm-cli": {
       "tags": []
     },

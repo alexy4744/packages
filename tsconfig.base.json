@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@alexy4744/nestjs-request-context": ["packages/nestjs-request-context/src/index.ts"],
       "@alexy4744/nx-mikro-orm-cli": ["packages/nx-mikro-orm-cli/src/index.ts"]
     }
   },
