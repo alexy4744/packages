@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "name": "nx-mikro-orm-cli",
+  "version": "0.0.1",
+  "generators": {
+    "config": {
+      "factory": "./src/generators/config/config.impl",
+      "schema": "./src/generators/config/schema.json",
+      "description": "Create a MikroORM CLI config for a project"
+    }
+  }
+}

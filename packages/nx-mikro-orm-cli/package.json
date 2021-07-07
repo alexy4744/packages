@@ -1,0 +1,23 @@
+{
+  "name": "@alexy4744/nx-mikro-orm-cli",
+  "version": "0.0.0",
+  "main": "src/index.js",
+  "generators": "./generators.json",
+  "executors": "./executors.json",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexy4744/packages.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alexy4744/packages/issues"
+  },
+  "homepage": "https://github.com/alexy4744/packages#readme",
+  "keywords": [
+    "nx",
+    "nx-plugin",
+    "mikro-orm",
+    "cli",
+    "monorepo"
+  ]
+}

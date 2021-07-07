@@ -1,0 +1,96 @@
+{
+  "version": 2,
+  "projects": {
+    "nx-mikro-orm-cli": {
+      "root": "packages/nx-mikro-orm-cli",
+      "sourceRoot": "packages/nx-mikro-orm-cli/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "packages/nx-mikro-orm-cli/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/packages/nx-mikro-orm-cli"
+          ],
+          "options": {
+            "jestConfig": "packages/nx-mikro-orm-cli/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/packages/nx-mikro-orm-cli",
+            "tsConfig": "packages/nx-mikro-orm-cli/tsconfig.lib.json",
+            "packageJson": "packages/nx-mikro-orm-cli/package.json",
+            "main": "packages/nx-mikro-orm-cli/src/index.ts",
+            "assets": [
+              "packages/nx-mikro-orm-cli/*.md",
+              {
+                "input": "./packages/nx-mikro-orm-cli/src",
+                "glob": "**/!(*.ts)",
+                "output": "./src"
+              },
+              {
+                "input": "./packages/nx-mikro-orm-cli/src",
+                "glob": "**/*.d.ts",
+                "output": "./src"
+              },
+              {
+                "input": "./packages/nx-mikro-orm-cli",
+                "glob": "generators.json",
+                "output": "."
+              },
+              {
+                "input": "./packages/nx-mikro-orm-cli",
+                "glob": "executors.json",
+                "output": "."
+              }
+            ]
+          }
+        },
+        "version": {
+          "executor": "@jscutlery/semver:version",
+          "options": {
+            "syncVersions": false
+          }
+        }
+      }
+    },
+    "nx-mikro-orm-cli-e2e": {
+      "root": "packages/nx-mikro-orm-cli-e2e",
+      "projectType": "application",
+      "sourceRoot": "packages/nx-mikro-orm-cli-e2e/src",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/nx-plugin:e2e",
+          "options": {
+            "target": "nx-mikro-orm-cli:build",
+            "npmPackageName": "@alexy4744/nx-mikro-orm-cli",
+            "pluginOutputPath": "dist/packages/nx-mikro-orm-cli",
+            "jestConfig": "packages/nx-mikro-orm-cli-e2e/jest.config.js"
+          }
+        },
+        "version": {
+          "executor": "@jscutlery/semver:version",
+          "options": {
+            "syncVersions": false
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/workspace"
+  }
+}

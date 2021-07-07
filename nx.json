@@ -1,0 +1,42 @@
+{
+  "npmScope": "alexy4744",
+  "affected": {
+    "defaultBase": "master"
+  },
+  "implicitDependencies": {
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
+    ".eslintrc.json": "*"
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/workspace/tasks-runners/default",
+      "options": {
+        "cacheableOperations": ["build", "lint", "test", "e2e"]
+      }
+    }
+  },
+  "targetDependencies": {
+    "build": [
+      {
+        "target": "build",
+        "projects": "dependencies"
+      }
+    ]
+  },
+  "projects": {
+    "nx-mikro-orm-cli": {
+      "tags": []
+    },
+    "nx-mikro-orm-cli-e2e": {
+      "tags": [],
+      "implicitDependencies": ["nx-mikro-orm-cli"]
+    }
+  },
+  "workspaceLayout": {
+    "appsDir": "packages",
+    "libsDir": "packages"
+  }
+}

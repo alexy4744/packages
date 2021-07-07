@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "id": "NxMikroOrmCli",
+  "title": "",
+  "type": "object",
+  "properties": {
+    "projectName": {
+      "x-prompt": "Which project do you wish to use MikroORM CLI with?",
+      "type": "string"
+    },
+    "configPath": {
+      "x-prompt": "Where is your CLI config located relative to your project directory?",
+      "type": "string"
+    },
+    "tsConfigPath": {
+      "x-prompt": "Where is your tsconfig.json located relative to your project directory?",
+      "type": "string"
+    },
+    "useTsNode": {
+      "x-prompt": "Use ts-node when executing the CLI?",
+      "type": "boolean"
+    }
+  },
+  "required": ["projectName", "configPath"]
+}
