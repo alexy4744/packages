@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# 1.0.0 (2021-07-07)
+
+
+### Features
+
+* **nx-mikro-orm-cli:** add nx-mikro-orm-cli package ([ddff29b](https://github.com/alexy4744/lunchbox/commit/ddff29b2daf057f2d0061fd3b470b7bf5ed06788))
+
+
+
 # [0.4.0](https://github.com/alexy4744/lunchbox/compare/nx-mikro-orm-cli-0.3.0...nx-mikro-orm-cli-0.4.0) (2021-07-07)
 
 
