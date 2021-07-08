@@ -1,6 +1,38 @@
 {
   "version": 2,
   "projects": {
+    "nestjs-nats-jetstream-transporter": {
+      "root": "packages/nestjs-nats-jetstream-transporter",
+      "sourceRoot": "packages/nestjs-nats-jetstream-transporter/src",
+      "projectType": "library",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/packages/nestjs-nats-jetstream-transporter",
+            "tsConfig": "packages/nestjs-nats-jetstream-transporter/tsconfig.lib.json",
+            "packageJson": "packages/nestjs-nats-jetstream-transporter/package.json",
+            "main": "packages/nestjs-nats-jetstream-transporter/src/index.ts",
+            "assets": ["packages/nestjs-nats-jetstream-transporter/*.md"]
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["packages/nestjs-nats-jetstream-transporter/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/packages/nestjs-nats-jetstream-transporter"],
+          "options": {
+            "jestConfig": "packages/nestjs-nats-jetstream-transporter/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
     "nestjs-request-context": {
       "root": "packages/nestjs-request-context",
       "sourceRoot": "packages/nestjs-request-context/src",
