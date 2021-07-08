@@ -5,9 +5,9 @@ import {
   updateProjectConfiguration
 } from "@nrwl/devkit";
 
-import { MikroOrmCliGeneratorSchema } from "./schema";
+import { MikroOrmGeneratorSchema } from "./schema";
 
-export default async (host: Tree, options: MikroOrmCliGeneratorSchema) => {
+export default async (host: Tree, options: MikroOrmGeneratorSchema) => {
   const project = readProjectConfiguration(host, options.projectName);
 
   project.targets = project.targets || {};
