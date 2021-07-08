@@ -18,7 +18,7 @@ $ npm install @alexy4744/nestjs-request-context
 First, create a class that extends `RequestContext`. This class will hold your request-level data.
 
 ```ts
-import { RequestContext as BaseRequestContext } from "@alexy4744/nestjs-request-context";
+import { BaseRequestContext } from "@alexy4744/nestjs-request-context";
 
 export class RequestContext extends BaseRequestContext<RequestContext>() {
   data?: string;
