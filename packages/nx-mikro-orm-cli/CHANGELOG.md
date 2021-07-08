@@ -2,6 +2,10 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.0.3](https://github.com/alexy4744/packages/compare/nx-mikro-orm-cli-1.0.2...nx-mikro-orm-cli-1.0.3) (2021-07-08)
+
+
+
 ## [1.0.2](https://github.com/alexy4744/packages/compare/nx-mikro-orm-cli-1.0.1...nx-mikro-orm-cli-1.0.2) (2021-07-08)
 
 

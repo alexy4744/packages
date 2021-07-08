@@ -1,6 +1,6 @@
 {
   "name": "@alexy4744/nx-mikro-orm-cli",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "NX executor that creates a package.json shim before running the MikroORM CLI",
   "keywords": [
     "nx",
