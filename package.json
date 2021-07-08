@@ -29,12 +29,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alexy4744/lunchbox.git"
+    "url": "git+https://github.com/alexy4744/packages.git"
   },
   "bugs": {
-    "url": "https://github.com/alexy4744/lunchbox/issues"
+    "url": "https://github.com/alexy4744/packages/issues"
   },
-  "homepage": "https://github.com/alexy4744/lunchbox#readme",
+  "homepage": "https://github.com/alexy4744/packages#readme",
   "dependencies": {
     "tslib": "^2.0.0"
   },
