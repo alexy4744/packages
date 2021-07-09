@@ -29,7 +29,7 @@ All MikroORM CLI arguments must be passed via the `--args` flag.
 $ mikro-orm schema:update --run
 
 # NX executor format
-$ nx run my-project:mikro-orm --args="schema:update --run"
+$ nx mikro-orm my-project --args="schema:update --run"
 ```
 
 The executor will follow these steps:
