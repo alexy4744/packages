@@ -16,8 +16,10 @@ A NATS transporter for NestJS that takes advantage of [JetStream](https://docs.n
 ## Installation
 
 ```bash
-$ npm install @alexy4744/nestjs-nats-jetstream-transporter nats@latest
+$ npm install @alexy4744/nestjs-nats-jetstream-transporter nats@2.2.0
 ```
+
+⚠️ This library uses [NATS.js](https://github.com/nats-io/nats.js#jetstream), which means that the underlying JetStream API is subject to change and does not follow semver. It is recommended to use `nats@2.2.0` until the JetStream API is out of beta as it has been fully tested with this package.
 
 ## Publishing Messages
 
@@ -105,6 +107,11 @@ const app = await NestFactory.createMicroservice(AppModule, {
   strategy: new NatsTransportStrategy({
     consumer: (options) => {
       options.durable("my-durable-name");
+
+      // When using a queue group with JetStream, it is necessary that deliverTo() and queue() uses the same name.
+      // This is a requirement for NATS.js v2.2.0, see this issue for more details:
+      // https://github.com/nats-io/nats.js/issues/446
+      options.deliverTo("my-queue-group");
       options.queue("my-queue-group");
     }
   })
@@ -172,7 +179,13 @@ If you want to enable this functionality for event patterns, you must also speci
 ```ts
 const app = await NestFactory.createMicroservice(AppModule, {
   strategy: new NatsTransportStrategy({
-    consumer: (options) => options.queue("my-queue-group"),
+    consumer: (options) => {
+      // When using a queue group with JetStream, it is necessary that deliverTo() and queue() uses the same name.
+      // This is a requirement for NATS.js v2.2.0, see this issue for more details:
+      // https://github.com/nats-io/nats.js/issues/446
+      options.deliverTo("my-queue-group");
+      options.queue("my-queue-group")
+    },
     queue: "my-queue-group"
   })
 });
