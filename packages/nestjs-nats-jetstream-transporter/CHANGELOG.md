@@ -2,6 +2,10 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.0.2](https://github.com/alexy4744/packages/compare/nestjs-nats-jetstream-transporter-1.0.1...nestjs-nats-jetstream-transporter-1.0.2) (2021-09-27)
+
+
+
 ## [1.0.1](https://github.com/alexy4744/packages/compare/nestjs-nats-jetstream-transporter-1.0.0...nestjs-nats-jetstream-transporter-1.0.1) (2021-09-27)
 
 
