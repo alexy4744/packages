@@ -191,8 +191,30 @@ const app = await NestFactory.createMicroservice(AppModule, {
 });
 ```
 
-## Tests
+## Development
 
 ```bash
-$ npm run test
+# Run tests
+$ nx test nestjs-nats-jetstream-transporter
 ```
+
+```bash
+# Update version
+$ nx version nestjs-nats-jetstream-transporter
+```
+
+```bash
+# Build the project
+$ nx build nestjs-nats-jetstream-transporter
+```
+
+```bash
+# Publish new version on GitHub
+$ git push --follow-tags origin master
+```
+
+```bash
+# Publish new version on NPM
+$ npm publish ./dist/packages/nestjs-nats-jetstream-transporter --access=public
+```
+
