@@ -23,5 +23,9 @@ export const BaseRequestContext = <Store>() => {
     static getStore(): Store | undefined {
       return this.als.getStore();
     }
+
+    static run(this: new () => Store, callback: () => void, ...args: unknown[]): void {
+      return BaseRequestContextImpl.als.run(new this(), callback, ...args);
+    }
   };
 };

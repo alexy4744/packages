@@ -9,9 +9,18 @@ export const RequestContextInterceptor = (
 ): Type<NestInterceptor> => {
   class RequestContextMixinInterceptor implements NestInterceptor {
     intercept(_ctx: ExecutionContext, next: CallHandler): Observable<unknown> {
-      store.enter();
-
-      return next.handle();
+      return new Observable((subscriber) => {
+        store.run(() => {
+          next
+            .handle()
+            .pipe()
+            .subscribe({
+              complete: () => subscriber.complete(),
+              error: (err) => subscriber.error(err),
+              next: (res) => subscriber.next(res)
+            });
+        });
+      });
     }
   }
 

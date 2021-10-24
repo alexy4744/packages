@@ -25,21 +25,25 @@ describe("RequestContext", () => {
   afterEach(() => app.close());
 
   it("should set the data in request context with interceptor", async () => {
-    const response = await request(server).post("/interceptor").query({ data: "test" });
+    const data = String(Math.random());
+
+    const response = await request(server).get("/interceptor").query({ data });
 
     expect(response.body).toEqual(
       expect.objectContaining({
-        data: "test"
+        data
       })
     );
   });
 
   it("should set the data in request context with middleware", async () => {
-    const response = await request(server).post("/middleware").query({ data: "test" });
+    const data = String(Math.random());
+
+    const response = await request(server).get("/middleware").query({ data });
 
     expect(response.body).toEqual(
       expect.objectContaining({
-        data: "test"
+        data
       })
     );
   });

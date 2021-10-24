@@ -12,7 +12,7 @@ import { AppRequestContext } from "./app.context";
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer): void {
     consumer.apply(RequestContextMiddleware(AppRequestContext)).forRoutes({
-      method: RequestMethod.POST,
+      method: RequestMethod.GET,
       path: "/middleware"
     });
   }

@@ -7,9 +7,7 @@ export const RequestContextMiddleware = (
 ): Type<NestMiddleware> => {
   class RequestContextMixinMiddleware implements NestMiddleware {
     use(_req: unknown, _res: unknown, next: () => void): void {
-      store.enter();
-
-      next();
+      store.run(next);
     }
   }
 

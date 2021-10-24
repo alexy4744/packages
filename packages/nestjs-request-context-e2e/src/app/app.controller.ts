@@ -1,4 +1,4 @@
-import { Controller, Post, Query, UseInterceptors } from "@nestjs/common";
+import { Controller, Get, Query, UseInterceptors } from "@nestjs/common";
 
 import { RequestContextInterceptor } from "@alexy4744/nestjs-request-context";
 
@@ -6,7 +6,7 @@ import { AppRequestContext } from "./app.context";
 
 @Controller()
 export class AppController {
-  @Post("interceptor")
+  @Get("interceptor")
   @UseInterceptors(RequestContextInterceptor(AppRequestContext))
   interceptor(@Query("data") data: string): AppRequestContext | undefined {
     const store = AppRequestContext.getStore();
@@ -18,7 +18,7 @@ export class AppController {
     return store;
   }
 
-  @Post("middleware")
+  @Get("middleware")
   middleware(@Query("data") data: string): AppRequestContext | undefined {
     const store = AppRequestContext.getStore();
 
