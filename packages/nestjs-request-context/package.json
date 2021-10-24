@@ -1,6 +1,6 @@
 {
   "name": "@alexy4744/nestjs-request-context",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Keep track of request-level data in NestJS using AsyncLocalStorage",
   "keywords": [
     "nestjs",
