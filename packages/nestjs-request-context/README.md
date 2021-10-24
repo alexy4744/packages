@@ -107,3 +107,30 @@ Run tests using the following commands:
 ```bash
 $ npm run test
 ```
+
+## Development
+
+```bash
+# Run tests
+$ nx e2e nestjs-request-context-e2e
+```
+
+```bash
+# Update version
+$ nx version nestjs-request-context
+```
+
+```bash
+# Build the project
+$ nx build nestjs-request-context
+```
+
+```bash
+# Publish new version on GitHub
+$ git push --follow-tags origin master
+```
+
+```bash
+# Publish new version on NPM
+$ npm publish ./dist/packages/nestjs-request-context --access=public
+```
