@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [1.1.0](https://github.com/alexy4744/packages/compare/nestjs-request-context-1.0.3...nestjs-request-context-1.1.0) (2021-10-26)
+
+
+### Features
+
+* **nestjs-request-context:** add request context guard as alternative ([abae374](https://github.com/alexy4744/packages/commit/abae37493b127a71a32684a5b3c507e9264ee501))
+
+
+
 ## [1.0.3](https://github.com/alexy4744/packages/compare/nestjs-request-context-1.0.2...nestjs-request-context-1.0.3) (2021-10-24)
 
 
