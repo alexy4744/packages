@@ -71,9 +71,35 @@ export class AppController {
 }
 ```
 
+For use cases where a middleware is not appropriate (i.e. NestJS microservices), you can use the `RequestContextGuard` or `RequestContextInterceptor`. Refer to the request lifecycle [here](https://docs.nestjs.com/faq/request-lifecycle#summary) to decide which one is the better option.
+
+### RequestContextGuard
+
+The `RequestContextGuard` is ran after all middlewares, but before interceptors. This is the next best option for use cases where a middleware is not possible. `RequestContextGuard` uses the `.enterWith()` method to transition into the request context, making it a less-safer method. It is best to apply this guard before any other guards to minimize the risk of re-using the same context. The guard can be applied as any other global Nest guard.
+
+```ts
+import { APP_GUARD, Module, Post } from "@nestjs/common";
+
+import { RequestContextGuard } from "@alexy4744/nestjs-request-context";
+
+import { RequestContext } from "./request.context";
+
+@Module({
+  ...
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: RequestContextGuard(RequestContext),
+    },
+    ...
+  ]
+})
+export class AppModule {}
+```
+
 ### RequestContextInterceptor
 
-For use cases where a middleware is not appropriate (i.e. NestJS microservices), you can use the `RequestContextInterceptor`. It can be applied normally like any other interceptor. Note that interceptors run after guards, refer to the request lifecycle [here](https://docs.nestjs.com/faq/request-lifecycle#summary).
+Interceptors always run after all middleware and guards. This may not be useful because the request context will be unaccessible in middleware and guards as it is too late in the request lifecycle. However, `RequestContextInterceptor` uses the `.run()` method to transition into the context, making it a safer option rather than using `RequestContextGuard`. The `RequestContextInterceptor` can be applied as any other Nest interceptor.
 
 ```ts
 import { Controller, Post, Query, UseInterceptors } from "@nestjs/common";
@@ -100,18 +126,10 @@ export class AppController {
 }
 ```
 
-## Tests
-
-Run tests using the following commands:
-
-```bash
-$ npm run test
-```
-
 ## Development
 
 ```bash
-# Run tests
+# Run e2e test
 $ nx e2e nestjs-request-context-e2e
 ```
 

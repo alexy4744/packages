@@ -11,7 +11,7 @@ describe("RequestContext", () => {
   let server: Server;
   let app: INestApplication;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const module = await Test.createTestingModule({
       imports: [AppModule]
     }).compile();
@@ -22,7 +22,19 @@ describe("RequestContext", () => {
     await app.init();
   });
 
-  afterEach(() => app.close());
+  afterAll(() => app.close());
+
+  it("should set the data in request context with guard", async () => {
+    const data = String(Math.random());
+
+    const response = await request(server).get("/guard").query({ data });
+
+    expect(response.body).toEqual(
+      expect.objectContaining({
+        data
+      })
+    );
+  });
 
   it("should set the data in request context with interceptor", async () => {
     const data = String(Math.random());
@@ -46,5 +58,11 @@ describe("RequestContext", () => {
         data
       })
     );
+  });
+
+  it("should return an empty body if request context is not entered", async () => {
+    const response = await request(server).get("/none");
+
+    expect(response.body).toEqual({});
   });
 });
