@@ -175,7 +175,7 @@ describe("NatsTransportStrategy", () => {
         data: new Uint8Array([104, 101, 108, 108, 111])
       });
 
-      const handler = jest.fn().mockResolvedValue(NACK);
+      const handler = jest.fn().mockRejectedValue(NACK);
 
       await strategy.handleJetStreamMessage(message, handler);
 
@@ -193,7 +193,7 @@ describe("NatsTransportStrategy", () => {
         data: new Uint8Array([104, 101, 108, 108, 111])
       });
 
-      const handler = jest.fn().mockResolvedValue(TERM);
+      const handler = jest.fn().mockRejectedValue(TERM);
 
       await strategy.handleJetStreamMessage(message, handler);
 

@@ -90,19 +90,23 @@ export class NatsTransportStrategy extends Server implements CustomTransportStra
 
     message.working();
 
-    const signal = await handler(decoded, new NatsContext([message]))
-      .then((maybeObservable) => this.transformToObservable(maybeObservable))
-      .then((observable) => observable.toPromise());
+    try {
+      await handler(decoded, new NatsContext([message]))
+        .then((maybeObservable) => this.transformToObservable(maybeObservable))
+        .then((observable) => observable.toPromise());
 
-    if (signal === NACK) {
-      return message.nak();
+      message.ack();
+    } catch (error) {
+      if (error === NACK) {
+        return message.nak();
+      }
+
+      if (error === TERM) {
+        return message.term();
+      }
+
+      throw error;
     }
-
-    if (signal === TERM) {
-      return message.term();
-    }
-
-    message.ack();
   }
 
   async handleNatsMessage(message: Msg, handler: MessageHandler): Promise<void> {
