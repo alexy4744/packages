@@ -19,8 +19,6 @@ import {
 
 import { ConsumerOptsBuilderImpl } from "nats/lib/nats-base-client/jsconsumeropts";
 
-import { noop } from "rxjs";
-
 import { NatsTransportStrategyOptions } from "./interfaces/nats-transport-strategy-options.interface";
 
 import { NatsStreamConfig } from "./interfaces/nats-stream-config.interface";
@@ -40,10 +38,10 @@ export class NatsTransportStrategy extends Server implements CustomTransportStra
   constructor(protected readonly options: NatsTransportStrategyOptions = {}) {
     super();
     this.codec = options.codec || JSONCodec();
-    this.logger = new Logger("NatsServer");
+    this.logger = new Logger(NatsTransportStrategy.name);
   }
 
-  async listen(callback: typeof noop): Promise<void> {
+  async listen(callback: () => void): Promise<void> {
     this.connection = await this.createNatsConnection(this.options.connection);
     this.jetstreamClient = this.createJetStreamClient(this.connection);
     this.jetstreamManager = await this.createJetStreamManager(this.connection);
@@ -69,14 +67,6 @@ export class NatsTransportStrategy extends Server implements CustomTransportStra
       this.jetstreamClient = undefined;
       this.jetstreamManager = undefined;
     }
-  }
-
-  /**
-   * Create a durable name that follows NATS naming rules
-   * @see https://docs.nats.io/jetstream/administration/naming
-   */
-  createDurableName(...parts: string[]): string {
-    return parts.join("-").replace(/\s|\.|>|\*/g, "-");
   }
 
   createJetStreamClient(connection: NatsConnection): JetStreamClient {
@@ -178,12 +168,6 @@ export class NatsTransportStrategy extends Server implements CustomTransportStra
 
       if (this.options.consumer) {
         this.options.consumer(consumerOptions);
-      }
-
-      if (consumerOptions.config.durable_name) {
-        consumerOptions.durable(
-          this.createDurableName(consumerOptions.config.durable_name, pattern)
-        );
       }
 
       consumerOptions.callback((error, message) => {

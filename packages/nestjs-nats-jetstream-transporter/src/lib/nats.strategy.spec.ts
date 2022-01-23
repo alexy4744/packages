@@ -95,14 +95,6 @@ describe("NatsTransportStrategy", () => {
     });
   });
 
-  describe("createDurableName", () => {
-    it("creates a compliant durable name", () => {
-      expect(strategy.createDurableName("this > ", "is", "a", "*test*")).toEqual(
-        "this----is-a--test-"
-      );
-    });
-  });
-
   describe("createJetStreamClient", () => {
     it("returns a jetstream client", () => {
       const jsMock = createMock<JetStreamClient>();
