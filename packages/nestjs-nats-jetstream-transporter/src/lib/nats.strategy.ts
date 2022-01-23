@@ -13,7 +13,8 @@ import {
   StreamInfo,
   connect,
   consumerOpts,
-  createInbox
+  createInbox,
+  NatsError
 } from "nats";
 
 import { ConsumerOptsBuilderImpl } from "nats/lib/nats-base-client/jsconsumeropts";
@@ -204,6 +205,10 @@ export class NatsTransportStrategy extends Server implements CustomTransportStra
 
         this.logger.log(`Subscribed to ${pattern} events`);
       } catch (error) {
+        if (!(error instanceof NatsError) || !error.isJetStreamError()) {
+          throw error;
+        }
+
         if (error.message === "no stream matches subject") {
           throw new Error(`Cannot find stream with the ${pattern} event pattern`);
         }
@@ -241,13 +246,17 @@ export class NatsTransportStrategy extends Server implements CustomTransportStra
     try {
       const stream = await manager.streams.info(config.name);
 
-      const updated = await manager.streams.update({
+      const updated = await manager.streams.update(config.name, {
         ...stream.config,
         ...config
       });
 
       return updated;
     } catch (error) {
+      if (!(error instanceof NatsError) || !error.isJetStreamError()) {
+        throw error;
+      }
+
       if (error.message === "stream not found") {
         const added = await manager.streams.add(config);
 

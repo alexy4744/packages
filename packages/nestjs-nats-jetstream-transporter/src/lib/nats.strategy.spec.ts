@@ -6,9 +6,10 @@ import {
   JSONCodec,
   Msg,
   NatsConnection,
-  StreamAPI,
   StringCodec
 } from "nats";
+
+import { StreamAPI } from "nats/lib/nats-base-client/types";
 
 import { NatsContext } from "./nats.context";
 
