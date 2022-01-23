@@ -1,4 +1,4 @@
-import { Codec, ConnectionOptions, ConsumerOptsBuilder, JsMsg } from "nats";
+import { Codec, ConnectionOptions, ConsumerOptsBuilder } from "nats";
 
 import { NatsStreamConfig } from "./nats-stream-config.interface";
 
@@ -19,14 +19,6 @@ export interface NatsTransportStrategyOptions {
    * @see https://docs.nats.io/jetstream/concepts/consumers
    */
   consumer?: (options: ConsumerOptsBuilder) => void;
-
-  /**
-   * Function that is called when the handler throws an error for a JetStream message.
-   * By default, messages will be terminated and will not be requeued.
-   *
-   * @default (message) => message.term()
-   */
-  onError?: (message: JsMsg) => void;
 
   /**
    * Queue group name

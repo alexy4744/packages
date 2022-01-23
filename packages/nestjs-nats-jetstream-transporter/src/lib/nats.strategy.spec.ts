@@ -205,48 +205,6 @@ describe("NatsTransportStrategy", () => {
       expect(message.term).toBeCalledTimes(1);
       expect(message.working).toBeCalledTimes(1);
     });
-
-    it("should term on error by default", async () => {
-      const message = createMock<JsMsg>({
-        data: new Uint8Array([104, 101, 108, 108, 111])
-      });
-
-      const handler = jest.fn().mockImplementation(() => {
-        throw new Error();
-      });
-
-      await strategy.handleJetStreamMessage(message, handler);
-
-      expect(handler).toBeCalledTimes(1);
-      expect(handler).toBeCalledWith("hello", createMock<NatsContext>());
-
-      expect(message.ack).not.toBeCalled();
-      expect(message.nak).not.toBeCalled();
-      expect(message.term).toBeCalledTimes(1);
-      expect(message.working).toBeCalledTimes(1);
-    });
-
-    it("should nack on error", async () => {
-      const message = createMock<JsMsg>({
-        data: new Uint8Array([104, 101, 108, 108, 111])
-      });
-
-      const handler = jest.fn().mockImplementation(() => {
-        throw new Error();
-      });
-
-      strategy["options"].onError = (message) => message.nak();
-
-      await strategy.handleJetStreamMessage(message, handler);
-
-      expect(handler).toBeCalledTimes(1);
-      expect(handler).toBeCalledWith("hello", createMock<NatsContext>());
-
-      expect(message.ack).not.toBeCalled();
-      expect(message.nak).toBeCalledTimes(1);
-      expect(message.term).not.toBeCalled();
-      expect(message.working).toBeCalledTimes(1);
-    });
   });
 
   describe("handleNatsMessage", () => {
@@ -423,29 +381,6 @@ describe("NatsTransportStrategy", () => {
       expect(client.subscribe).toBeCalledWith("my.first.event", defaultConsumerOptions);
       expect(client.subscribe).toBeCalledWith("my.second.event", defaultConsumerOptions);
       expect(client.subscribe).not.toBeCalledWith("my.first.message");
-    });
-
-    it("should prefix the event pattern with a durable name if provided", async () => {
-      strategy.addHandler("my.event", jest.fn(), true);
-
-      strategy["options"].consumer = (options: ConsumerOptsBuilder) => {
-        options.durable("durable");
-      };
-
-      const client = createMock<JetStreamClient>();
-
-      await strategy.subscribeToEventPatterns(client);
-
-      const consumerOptions = expect.objectContaining({
-        config: expect.objectContaining({
-          deliver_subject: expect.stringMatching(/^_INBOX\./),
-          durable_name: "durable-my-event"
-        }),
-        mack: true
-      });
-
-      expect(client.subscribe).toBeCalledTimes(1);
-      expect(client.subscribe).toBeCalledWith("my.event", consumerOptions);
     });
   });
 

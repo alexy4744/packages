@@ -86,29 +86,23 @@ export class NatsTransportStrategy extends Server implements CustomTransportStra
   }
 
   async handleJetStreamMessage(message: JsMsg, handler: MessageHandler): Promise<void> {
-    const handleError = this.options.onError || ((message) => message.term());
+    const decoded = this.codec.decode(message.data);
 
-    try {
-      const decoded = this.codec.decode(message.data);
+    message.working();
 
-      message.working();
+    const signal = await handler(decoded, new NatsContext([message]))
+      .then((maybeObservable) => this.transformToObservable(maybeObservable))
+      .then((observable) => observable.toPromise());
 
-      const signal = await handler(decoded, new NatsContext([message]))
-        .then((maybeObservable) => this.transformToObservable(maybeObservable))
-        .then((observable) => observable.toPromise());
-
-      if (signal === NACK) {
-        return message.nak();
-      }
-
-      if (signal === TERM) {
-        return message.term();
-      }
-
-      message.ack();
-    } catch {
-      handleError(message);
+    if (signal === NACK) {
+      return message.nak();
     }
+
+    if (signal === TERM) {
+      return message.term();
+    }
+
+    message.ack();
   }
 
   async handleNatsMessage(message: Msg, handler: MessageHandler): Promise<void> {
