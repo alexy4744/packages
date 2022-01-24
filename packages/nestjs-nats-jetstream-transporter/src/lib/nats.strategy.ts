@@ -16,8 +16,6 @@ import {
   NatsError
 } from "nats";
 
-import { ConsumerOptsBuilderImpl } from "nats/lib/nats-base-client/jsconsumeropts";
-
 import { NatsTransportStrategyOptions } from "./interfaces/nats-transport-strategy-options.interface";
 
 import { NatsContext } from "./nats.context";
@@ -151,9 +149,7 @@ export class NatsTransportStrategy extends Server implements CustomTransportStra
     );
 
     for (const [pattern, handler] of eventHandlers) {
-      // Need to access config options that is not exposed by the ConsumerOptsBuilder interface
-      // https://github.com/nats-io/nats.deno/blob/main/nats-base-client/jsconsumeropts.ts#L55
-      const consumerOptions = consumerOpts() as ConsumerOptsBuilderImpl;
+      const consumerOptions = consumerOpts();
 
       if (this.options.consumer) {
         this.options.consumer(consumerOptions);
