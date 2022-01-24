@@ -10,7 +10,6 @@ import {
   JSONCodec,
   Msg,
   NatsConnection,
-  StreamInfo,
   connect,
   consumerOpts,
   createInbox,
@@ -20,8 +19,6 @@ import {
 import { ConsumerOptsBuilderImpl } from "nats/lib/nats-base-client/jsconsumeropts";
 
 import { NatsTransportStrategyOptions } from "./interfaces/nats-transport-strategy-options.interface";
-
-import { NatsStreamConfig } from "./interfaces/nats-stream-config.interface";
 
 import { NatsContext } from "./nats.context";
 
@@ -47,8 +44,6 @@ export class NatsTransportStrategy extends Server implements CustomTransportStra
     this.jetstreamManager = await this.createJetStreamManager(this.connection);
 
     this.handleStatusUpdates(this.connection);
-
-    await this.createStreams(this.jetstreamManager, this.options.streams);
 
     await this.subscribeToEventPatterns(this.jetstreamClient);
 
@@ -79,10 +74,6 @@ export class NatsTransportStrategy extends Server implements CustomTransportStra
 
   createNatsConnection(options: ConnectionOptions = {}): Promise<NatsConnection> {
     return connect(options);
-  }
-
-  async createStreams(manager: JetStreamManager, configs: NatsStreamConfig[] = []): Promise<void> {
-    await Promise.all(configs.map((config) => this.upsertStream(manager, config)));
   }
 
   async handleJetStreamMessage(message: JsMsg, handler: MessageHandler): Promise<void> {
@@ -218,34 +209,6 @@ export class NatsTransportStrategy extends Server implements CustomTransportStra
       });
 
       this.logger.log(`Subscribed to ${pattern} messages`);
-    }
-  }
-
-  /**
-   * Creates a new stream if it doesn't exist, otherwise updates the existing stream
-   */
-  async upsertStream(manager: JetStreamManager, config: NatsStreamConfig): Promise<StreamInfo> {
-    try {
-      const stream = await manager.streams.info(config.name);
-
-      const updated = await manager.streams.update(config.name, {
-        ...stream.config,
-        ...config
-      });
-
-      return updated;
-    } catch (error) {
-      if (!(error instanceof NatsError) || !error.isJetStreamError()) {
-        throw error;
-      }
-
-      if (error.message === "stream not found") {
-        const added = await manager.streams.add(config);
-
-        return added;
-      }
-
-      throw error;
     }
   }
 }

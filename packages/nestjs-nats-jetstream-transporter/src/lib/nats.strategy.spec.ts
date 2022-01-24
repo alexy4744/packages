@@ -1,5 +1,4 @@
 import {
-  ConsumerOptsBuilder,
   JetStreamClient,
   JetStreamManager,
   JsMsg,
@@ -9,15 +8,11 @@ import {
   StringCodec
 } from "nats";
 
-import { StreamAPI } from "nats/lib/nats-base-client/types";
-
 import { NatsContext } from "./nats.context";
 
 import { NatsTransportStrategy } from "./nats.strategy";
 
 import { NACK, TERM } from "./nats.constants";
-
-import { NatsStreamConfig } from "./interfaces/nats-stream-config.interface";
 
 import { createMock } from "@golevelup/ts-jest";
 
@@ -39,8 +34,6 @@ describe("NatsTransportStrategy", () => {
         jetstreamManager: () => Promise.resolve(jetstreamManager)
       });
 
-      const createStreamsSpy = jest.spyOn(strategy, "createStreams");
-
       const handleStatusUpdatesSpy = jest.spyOn(strategy, "handleStatusUpdates");
 
       const subscribeToEventPatternsSpy = jest.spyOn(strategy, "subscribeToEventPatterns");
@@ -54,9 +47,6 @@ describe("NatsTransportStrategy", () => {
         expect(strategy["connection"]).toStrictEqual(connection);
         expect(strategy["jetstreamClient"]).toStrictEqual(jetstreamClient);
         expect(strategy["jetstreamManager"]).toStrictEqual(jetstreamManager);
-
-        expect(createStreamsSpy).toBeCalledTimes(1);
-        expect(createStreamsSpy).toBeCalledWith(strategy["jetstreamManager"], undefined);
 
         expect(handleStatusUpdatesSpy).toBeCalledTimes(1);
         expect(handleStatusUpdatesSpy).toBeCalledWith(strategy["connection"]);
@@ -122,24 +112,6 @@ describe("NatsTransportStrategy", () => {
 
       expect(client.jetstreamManager).toBeCalledTimes(1);
       expect(jetstreamManager).toStrictEqual(jsmMock);
-    });
-  });
-
-  describe("createStreams", () => {
-    it("upserts streams", async () => {
-      const manager = createMock<JetStreamManager>({
-        streams: createMock<StreamAPI>()
-      });
-
-      const streams = [createMock<NatsStreamConfig>(), createMock<NatsStreamConfig>()];
-
-      const upsertStreamSpy = jest.spyOn(strategy, "upsertStream");
-
-      await strategy.createStreams(manager, streams);
-
-      expect(upsertStreamSpy).toBeCalledTimes(2);
-      expect(upsertStreamSpy).toBeCalledWith(manager, streams[0]);
-      expect(upsertStreamSpy).toBeCalledWith(manager, streams[1]);
     });
   });
 
@@ -402,54 +374,6 @@ describe("NatsTransportStrategy", () => {
       expect(client.subscribe).toBeCalledWith("my.first.message", defaultConsumerOptions);
       expect(client.subscribe).toBeCalledWith("my.second.message", defaultConsumerOptions);
       expect(client.subscribe).not.toBeCalledWith("my.first.event");
-    });
-  });
-
-  describe("upsertStream", () => {
-    it("should update the existing stream", async () => {
-      const manager = createMock<JetStreamManager>({
-        streams: createMock<StreamAPI>()
-      });
-
-      await strategy.upsertStream(manager, { name: "existing-stream" });
-
-      expect(manager.streams.info).toBeCalledWith("existing-stream");
-      expect(manager.streams.update).toBeCalled();
-      expect(manager.streams.add).not.toBeCalled();
-    });
-
-    it("should create a new stream", async () => {
-      const manager = createMock<JetStreamManager>({
-        streams: createMock<StreamAPI>({
-          info: async () => {
-            throw new Error("stream not found");
-          }
-        })
-      });
-
-      await strategy.upsertStream(manager, { name: "new-stream" });
-
-      expect(manager.streams.info).toBeCalledWith("new-stream");
-      expect(manager.streams.update).not.toBeCalled();
-      expect(manager.streams.add).toBeCalled();
-    });
-
-    it("should throw on unknown errors", async () => {
-      const manager = createMock<JetStreamManager>({
-        streams: createMock<StreamAPI>({
-          info: async () => {
-            throw new Error();
-          }
-        })
-      });
-
-      await expect(
-        strategy.upsertStream(manager, { name: "existing-stream" })
-      ).rejects.toBeInstanceOf(Error);
-
-      expect(manager.streams.info).toBeCalledWith("existing-stream");
-      expect(manager.streams.update).not.toBeCalled();
-      expect(manager.streams.add).not.toBeCalled();
     });
   });
 });

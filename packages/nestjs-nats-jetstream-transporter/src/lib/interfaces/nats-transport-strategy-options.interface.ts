@@ -1,7 +1,5 @@
 import { Codec, ConnectionOptions, ConsumerOptsBuilder } from "nats";
 
-import { NatsStreamConfig } from "./nats-stream-config.interface";
-
 export interface NatsTransportStrategyOptions {
   /**
    * NATS codec to use for encoding and decoding messages
@@ -25,10 +23,4 @@ export interface NatsTransportStrategyOptions {
    * @see https://docs.nats.io/nats-concepts/queue
    */
   queue?: string;
-
-  /**
-   * @see https://github.com/nats-io/nats.deno/blob/main/jetstream.md#jetstreammanager
-   * @see https://docs.nats.io/jetstream/concepts/streams
-   */
-  streams?: NatsStreamConfig[];
 }
