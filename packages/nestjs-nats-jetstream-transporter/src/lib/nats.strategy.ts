@@ -181,8 +181,6 @@ export class NatsTransportStrategy extends Server implements CustomTransportStra
         if (error.message === "no stream matches subject") {
           throw new Error(`Cannot find stream with the ${pattern} event pattern`);
         }
-
-        throw error;
       }
     }
   }
