@@ -74,6 +74,7 @@ describe("MikroORM CLI Executor", () => {
     const output = await executor.default(input, context);
 
     const shim = JSON.stringify({
+      devDependencies: { "mikro-orm": "*" },
       "mikro-orm": input.config
     });
 
@@ -105,6 +106,7 @@ describe("MikroORM CLI Executor", () => {
     const output = await executor.default(input, context);
 
     const shim = JSON.stringify({
+      devDependencies: { "mikro-orm": "*" },
       "mikro-orm": input.config
     });
 

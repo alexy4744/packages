@@ -36,6 +36,7 @@ export default async (options: MikroOrmExecutorSchema, context: ExecutorContext)
   const renamedPackageJsonPath = await renameExistingPackageJson(projectPackageJsonPath);
 
   const shim = JSON.stringify({
+    "devDependencies": { "mikro-orm": "*"  },
     "mikro-orm": options.config
   });
 
