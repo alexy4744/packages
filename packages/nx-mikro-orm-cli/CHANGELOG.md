@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [1.1.0](https://github.com/alexy4744/packages/compare/nx-mikro-orm-cli-1.0.4...nx-mikro-orm-cli-1.1.0) (2022-02-09)
+
+
+### Features
+
+* **nx-mikro-orm-cli:** support mikro-orm v5 ([b3252e3](https://github.com/alexy4744/packages/commit/b3252e3c5b0f495fb0eed7cd037c12078d5cfcec))
+
+
+
 ## [1.0.4](https://github.com/alexy4744/packages/compare/nx-mikro-orm-cli-1.0.3...nx-mikro-orm-cli-1.0.4) (2021-07-09)
 
 
