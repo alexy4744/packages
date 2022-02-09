@@ -77,10 +77,17 @@ describe("MikroORM CLI Executor", () => {
       "mikro-orm": input.config
     });
 
-    const execArgs = [`${binPath} ${input.args}`, { cwd: projectPath }, expect.any(Function)];
-
     expect(fs.promises.writeFile).toHaveBeenCalledWith(packageJsonPath, shim);
-    expect(child_process.exec).toHaveBeenCalledWith(...execArgs);
+    expect(child_process.exec).toHaveBeenCalledWith(
+      `${binPath} ${input.args}`,
+      {
+        cwd: projectPath,
+        env: {
+          MIKRO_ORM_ALLOW_GLOBAL_CLI: "1"
+        }
+      },
+      expect.any(Function)
+    );
     expect(fs.promises.rm).toHaveBeenCalledWith(packageJsonPath);
 
     expect(fs.promises.writeFile).toHaveBeenCalledBefore(child_process.exec as never);
@@ -108,10 +115,17 @@ describe("MikroORM CLI Executor", () => {
       "mikro-orm": input.config
     });
 
-    const execArgs = [`${binPath} ${input.args}`, { cwd: projectPath }, expect.any(Function)];
-
     expect(fs.promises.writeFile).toHaveBeenCalledWith(packageJsonPath, shim);
-    expect(child_process.exec).toHaveBeenCalledWith(...execArgs);
+    expect(child_process.exec).toHaveBeenCalledWith(
+      `${binPath} ${input.args}`,
+      {
+        cwd: projectPath,
+        env: {
+          MIKRO_ORM_ALLOW_GLOBAL_CLI: "1"
+        }
+      },
+      expect.any(Function)
+    );
     expect(fs.promises.rm).toHaveBeenCalledWith(packageJsonPath);
 
     expect(fs.promises.rename).toBeCalledTimes(2);
