@@ -6,7 +6,7 @@ import * as util from "util";
 import { ExecutorContext } from "@nrwl/devkit";
 
 import { MikroOrmExecutorSchema } from "./schema";
-
+console.log("TEST");
 const exec = util.promisify(child_process.exec);
 
 export const fileExists = async (path) => !!(await fs.promises.stat(path).catch(() => false));
