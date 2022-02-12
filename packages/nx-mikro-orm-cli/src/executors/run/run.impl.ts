@@ -17,7 +17,7 @@ export const renameExistingPackageJson = async (
   if (!(await fileExists(packageJsonPath))) {
     return null;
   }
-
+  console.log("TEST");
   const renamedPath = `${packageJsonPath}.${Date.now()}`;
 
   await fs.promises.rename(packageJsonPath, renamedPath);
