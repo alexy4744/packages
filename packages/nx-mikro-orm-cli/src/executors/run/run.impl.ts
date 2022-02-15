@@ -45,10 +45,10 @@ export default async (options: MikroOrmExecutorSchema, context: ExecutorContext)
     const { stderr, stdout } = await exec(`${binPath} ${options.args}`, {
       cwd: projectPath,
       env: {
-        ...process.env,
         // MikroORM v5 requires a global installation of the CLI and drivers; but since we always execute the CLI in the workspace root,
         // this is an irrelevant requirement, see https://github.com/mikro-orm/mikro-orm/commit/8952149a78be5ba527ae1614cb1eb36d6d8d1dd9
-        MIKRO_ORM_ALLOW_GLOBAL_CLI: "1"
+        MIKRO_ORM_ALLOW_GLOBAL_CLI: "1",
+        ...process.env,
       }
     });
 
