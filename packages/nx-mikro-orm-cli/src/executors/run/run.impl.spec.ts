@@ -78,13 +78,12 @@ describe("MikroORM CLI Executor", () => {
     });
 
     expect(fs.promises.writeFile).toHaveBeenCalledWith(packageJsonPath, shim);
+
     expect(child_process.exec).toHaveBeenCalledWith(
       `${binPath} ${input.args}`,
       {
         cwd: projectPath,
-        env: {
-          MIKRO_ORM_ALLOW_GLOBAL_CLI: "1"
-        }
+        env: expect.objectContaining({ MIKRO_ORM_ALLOW_GLOBAL_CLI: "1" })
       },
       expect.any(Function)
     );
@@ -120,9 +119,7 @@ describe("MikroORM CLI Executor", () => {
       `${binPath} ${input.args}`,
       {
         cwd: projectPath,
-        env: {
-          MIKRO_ORM_ALLOW_GLOBAL_CLI: "1"
-        }
+        env: expect.objectContaining({ MIKRO_ORM_ALLOW_GLOBAL_CLI: "1" })
       },
       expect.any(Function)
     );
