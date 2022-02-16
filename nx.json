@@ -3,6 +3,9 @@
   "affected": {
     "defaultBase": "master"
   },
+  "cli": {
+    "defaultCollection": "@nrwl/workspace"
+  },
   "implicitDependencies": {
     "package.json": {
       "dependencies": "*",
@@ -25,25 +28,6 @@
         "projects": "dependencies"
       }
     ]
-  },
-  "projects": {
-    "nestjs-nats-jetstream-transporter": {
-      "tags": []
-    },
-    "nestjs-request-context": {
-      "tags": []
-    },
-    "nestjs-request-context-e2e": {
-      "tags": [],
-      "implicitDependencies": ["nestjs-request-context"]
-    },
-    "nx-mikro-orm-cli": {
-      "tags": []
-    },
-    "nx-mikro-orm-cli-e2e": {
-      "tags": [],
-      "implicitDependencies": ["nx-mikro-orm-cli"]
-    }
   },
   "workspaceLayout": {
     "appsDir": "packages",
