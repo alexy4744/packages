@@ -81,13 +81,14 @@
       "root": "packages/nestjs-request-context-e2e",
       "projectType": "application",
       "sourceRoot": "packages/nestjs-request-context-e2e/src",
+      "implicitDependencies": ["nestjs-request-context"],
+      "npmPackageName": "@alexy4744/nestjs-request-context",
+      "pluginOutputPath": "dist/packages/nestjs-request-context",
       "targets": {
         "e2e": {
           "executor": "@nrwl/nx-plugin:e2e",
           "options": {
             "target": "nestjs-request-context:build",
-            "npmPackageName": "@alexy4744/nestjs-request-context",
-            "pluginOutputPath": "dist/packages/nestjs-request-context",
             "jestConfig": "packages/nestjs-request-context-e2e/jest.config.js"
           }
         },
@@ -163,13 +164,14 @@
       "root": "packages/nx-mikro-orm-cli-e2e",
       "projectType": "application",
       "sourceRoot": "packages/nx-mikro-orm-cli-e2e/src",
+      "implicitDependencies": ["nx-mikro-orm-cli"],
+      "npmPackageName": "@alexy4744/nx-mikro-orm-cli",
+      "pluginOutputPath": "dist/packages/nx-mikro-orm-cli",
       "targets": {
         "e2e": {
           "executor": "@nrwl/nx-plugin:e2e",
           "options": {
             "target": "nx-mikro-orm-cli:build",
-            "npmPackageName": "@alexy4744/nx-mikro-orm-cli",
-            "pluginOutputPath": "dist/packages/nx-mikro-orm-cli",
             "jestConfig": "packages/nx-mikro-orm-cli-e2e/jest.config.js"
           }
         },
@@ -181,8 +183,5 @@
         }
       }
     }
-  },
-  "cli": {
-    "defaultCollection": "@nrwl/workspace"
   }
 }
