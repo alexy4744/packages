@@ -82,9 +82,9 @@ describe("MikroORM CLI Executor", () => {
       `${binPath} ${input.args}`,
       {
         cwd: projectPath,
-        env: {
+        env: expect.objectContaining({
           MIKRO_ORM_ALLOW_GLOBAL_CLI: "1"
-        }
+        })
       },
       expect.any(Function)
     );
@@ -120,9 +120,9 @@ describe("MikroORM CLI Executor", () => {
       `${binPath} ${input.args}`,
       {
         cwd: projectPath,
-        env: {
+        env: expect.objectContaining({
           MIKRO_ORM_ALLOW_GLOBAL_CLI: "1"
-        }
+        })
       },
       expect.any(Function)
     );
